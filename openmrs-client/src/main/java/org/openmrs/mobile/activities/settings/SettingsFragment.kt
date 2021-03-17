@@ -44,11 +44,12 @@ import org.openmrs.mobile.utilities.ApplicationConstants
 
 class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsContract.View {
     private var broadcastReceiver: BroadcastReceiver? = null
-    private lateinit var binding: FragmentSettingsBinding
+    private var _binding: FragmentSettingsBinding?=null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 mPresenter?.updateConceptsInDBTextView()
@@ -190,5 +191,10 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
         fun newInstance(): SettingsFragment {
             return SettingsFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

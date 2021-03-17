@@ -37,6 +37,7 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
+import org.openmrs.mobile.databinding.FragmentActiveVisitsBinding
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
@@ -45,7 +46,8 @@ import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
-    private var binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentDashboardBinding? = null
+    private val binding get() = _binding!!
     private var mFindPatientButton: ImageView? = null
     private var mRegistryPatientButton: ImageView? = null
     private var mActiveVisitsButton: ImageView? = null
@@ -63,7 +65,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
 
         val settings2 = requireActivity().getSharedPreferences(ApplicationConstants.OPENMRS_PREF_FILE, 0)
         if (settings2.getBoolean("my_first_time", true)) {
-            showOverlayTutorial((binding!!.findPatientView).id, getString(R.string.dashboard_search_icon_label),
+            showOverlayTutorial((binding.findPatientView).id, getString(R.string.dashboard_search_icon_label),
                     getString(R.string.showcase_find_patients), R.style.CustomShowcaseTheme,
                     ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT, true)
             settings2.edit().putBoolean("my_first_time", false).apply()
@@ -117,10 +119,10 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root = binding!!.root
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root = binding.root
         if (root != null) {
-            initFragmentFields(binding!!)
+            initFragmentFields(binding)
             setListeners()
         }
         return root
@@ -237,5 +239,10 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         fun newInstance(): DashboardFragment {
             return DashboardFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
