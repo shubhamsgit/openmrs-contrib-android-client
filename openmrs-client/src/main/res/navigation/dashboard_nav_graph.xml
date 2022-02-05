@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_formEntryPatientListActivity"
             app:destination="@id/formEntryPatientListActivity" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_providerManagerDashboardActivity"
+            app:destination="@id/providerManagerDashboardActivity" />
 
     </fragment>
 
@@ -64,5 +67,10 @@
         android:id="@+id/formEntryPatientListActivity"
         android:name="org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity"
         android:label="FormEntryPatientListActivity" />
+    <activity
+        android:id="@+id/providerManagerDashboardActivity"
+        android:name="org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity"
+        android:label="activity_provider_management"
+        tools:layout="@layout/activity_provider_management" />
 
 </navigation>

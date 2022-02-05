@@ -76,6 +76,7 @@ class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), A
     companion object {
         fun newInstance(): ActiveVisitsFragment {
             return ActiveVisitsFragment()
+            //test try branch
         }
     }
 
